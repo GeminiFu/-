@@ -412,5 +412,279 @@ namespace 分數圓餅圖
         {
             clickDown1 = false;
         }
+
+        // ----------------------------------------------------
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.X > (center.X - radius) && e.X < (center.X + radius)) // 判斷 X 軸是否在圓裡面
+            {
+                if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
+                {
+                    clickDown1 = true;
+
+                    if (rb_Draw_1.Checked)
+                    {
+                        float side = e.X - center.X; // 臨邊
+                        float opponent = center.Y - e.Y; // 對邊
+                        float incline = (float)Math.Sqrt(Math.Pow((double)side, 2) + Math.Pow((double)opponent, 2)); // 斜邊
+                        float angle;
+
+                        angle = RadToDegree(Math.Asin(opponent / incline)); // 用反三角函數得到弧度，再把弧度轉成角度
+
+                        // 要把反三角函數得到的角度轉成 360 度的系統
+                        if (side < 0 && opponent >= 0)
+                        {
+                            angle = 90 + (90 - angle); // 把左上四分之一個角度轉過來加上 90 度
+                        }
+                        else if (side <= 0 && opponent < 0)
+                        {
+                            angle = 180 - angle; // angle 是負的
+                        }
+                        else if (side >= 0 && opponent < 0)
+                        {
+                            angle = 270 + 90 + angle; // angle 是負的
+                        }
+
+                        Console.WriteLine($"Click angle is {angle}");
+
+                        // 前面畫圓的時候，順便紀錄每條線的角度
+                        // 在這邊找到第一個大於點擊的角度，點擊的位置就在這條線和上一條線中間
+                        // 沒找到的話，代表是在最後一塊
+                        float index = angleList1.FindIndex(x => x > angle);
+                        Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
+                        float p0X, p0Y, p1X, p1Y;
+
+                        p0X = center.X - radius; // 圓心
+                        p0Y = center.Y - radius; // 圓心
+
+                        if (index > 0)
+                        {
+                            // 填滿圓，畫角度是順時鐘，所以加個負號變成逆時鐘
+                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList1[(int)index - 1], -360 / section1);
+
+                            if (!angleList1Count.Any(x => x == angleList1[(int)index]))
+                            {
+                                angleList1Count.Add(angleList1[(int)index]);
+                            }
+                        }
+                        else
+                        {
+                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList1[angleList1.Count - 1], -360 / section1);
+
+                            if (!angleList1Count.Any(x => x == 0))
+                            {
+                                angleList1Count.Add(0);
+                            }
+                        }
+
+                        lbl_Section1.Text = $"{angleList1Count.Count} / {section1}";
+                        pictureBox1.Image = bmp; // 畫上圖案
+                    }
+                }
+            }
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (clickDown1)
+            {
+                if (e.X > (center.X - radius) && e.X < (center.X + radius)) // 判斷 X 軸是否在圓裡面
+                {
+                    if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
+                    {
+
+                        if (rb_Draw_1.Checked)
+                        {                        // 在圓裡面
+                            float side = e.X - center.X;
+                            float opponent = center.Y - e.Y;
+                            float incline = (float)Math.Sqrt(Math.Pow((double)side, 2) + Math.Pow((double)opponent, 2));
+                            float angle;
+
+                            angle = RadToDegree(Math.Asin(opponent / incline));
+                            Console.WriteLine($"Cosine angle is {angle}");
+                            if (side < 0 && opponent >= 0)
+                            {
+                                angle = 90 + (90 - angle); // 把左上四分之一個角度轉過來加上 90 度
+                            }
+                            else if (side <= 0 && opponent < 0)
+                            {
+                                angle = 180 - angle; // angle 是負的
+                            }
+                            else if (side >= 0 && opponent < 0)
+                            {
+                                angle = 270 + 90 + angle; // angle 是負的
+                            }
+                            Console.WriteLine($"Click angle is {angle}");
+
+                            float index = angleList1.FindIndex(x => x > angle);
+                            Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
+
+                            if (index > 0)
+                            {
+                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList1[(int)index - 1], -360 / section1);
+                                if (!angleList1Count.Any(x => x == angleList1[(int)index]))
+                                {
+                                    angleList1Count.Add(angleList1[(int)index]);
+                                }
+                            }
+                            else
+                            {
+                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList1[angleList1.Count - 1], -360 / section1);
+                                if (!angleList1Count.Any(x => x == 0))
+                                {
+                                    angleList1Count.Add(0);
+                                }
+                            }
+
+                            lbl_Section1.Text = $"{angleList1Count.Count} / {section1}";
+                            pictureBox1.Image = bmp;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            clickDown1 = false;
+        }
+        // ----------------------------------------------------
+
+        private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.X > (center.X - radius) && e.X < (center.X + radius)) // 判斷 X 軸是否在圓裡面
+            {
+                if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
+                {
+                    clickDown1 = true;
+
+                    if (rb_Draw_2.Checked)
+                    {
+                        float side = e.X - center.X; // 臨邊
+                        float opponent = center.Y - e.Y; // 對邊
+                        float incline = (float)Math.Sqrt(Math.Pow((double)side, 2) + Math.Pow((double)opponent, 2)); // 斜邊
+                        float angle;
+
+                        angle = RadToDegree(Math.Asin(opponent / incline)); // 用反三角函數得到弧度，再把弧度轉成角度
+
+                        // 要把反三角函數得到的角度轉成 360 度的系統
+                        if (side < 0 && opponent >= 0)
+                        {
+                            angle = 90 + (90 - angle); // 把左上四分之一個角度轉過來加上 90 度
+                        }
+                        else if (side <= 0 && opponent < 0)
+                        {
+                            angle = 180 - angle; // angle 是負的
+                        }
+                        else if (side >= 0 && opponent < 0)
+                        {
+                            angle = 270 + 90 + angle; // angle 是負的
+                        }
+
+                        Console.WriteLine($"Click angle is {angle}");
+
+                        // 前面畫圓的時候，順便紀錄每條線的角度
+                        // 在這邊找到第一個大於點擊的角度，點擊的位置就在這條線和上一條線中間
+                        // 沒找到的話，代表是在最後一塊
+                        float index = angleList2.FindIndex(x => x > angle);
+                        Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
+                        float p0X, p0Y, p1X, p1Y;
+
+                        p0X = center.X - radius; // 圓心
+                        p0Y = center.Y - radius; // 圓心
+
+                        if (index > 0)
+                        {
+                            // 填滿圓，畫角度是順時鐘，所以加個負號變成逆時鐘
+                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList2[(int)index - 1], -360 / section2);
+
+                            if (!angleList2Count.Any(x => x == angleList2[(int)index]))
+                            {
+                                angleList2Count.Add(angleList2[(int)index]);
+                            }
+                        }
+                        else
+                        {
+                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
+
+                            if (!angleList2Count.Any(x => x == 0))
+                            {
+                                angleList2Count.Add(0);
+                            }
+                        }
+
+                        lbl_Section2.Text = $"{angleList2Count.Count} / {section2}";
+                        pictureBox2.Image = bmp;
+                    }
+                }
+            }
+        }
+
+        private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (clickDown1)
+            {
+                if (e.X > (center.X - radius) && e.X < (center.X + radius)) // 判斷 X 軸是否在圓裡面
+                {
+                    if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
+                    {
+                        if (rb_Draw_2.Checked)
+                        {                        // 在圓裡面
+                            float side = e.X - center.X;
+                            float opponent = center.Y - e.Y;
+                            float incline = (float)Math.Sqrt(Math.Pow((double)side, 2) + Math.Pow((double)opponent, 2));
+                            float angle;
+
+                            angle = RadToDegree(Math.Asin(opponent / incline));
+                            Console.WriteLine($"Cosine angle is {angle}");
+                            if (side < 0 && opponent >= 0)
+                            {
+                                angle = 90 + (90 - angle); // 把左上四分之一個角度轉過來加上 90 度
+                            }
+                            else if (side <= 0 && opponent < 0)
+                            {
+                                angle = 180 - angle; // angle 是負的
+                            }
+                            else if (side >= 0 && opponent < 0)
+                            {
+                                angle = 270 + 90 + angle; // angle 是負的
+                            }
+                            Console.WriteLine($"Click angle is {angle}");
+
+                            float index = angleList2.FindIndex(x => x > angle);
+                            Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
+
+                            if (index > 0)
+                            {
+                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[(int)index - 1], -360 / section2);
+
+                                if (!angleList2Count.Any(x => x == angleList2[(int)index]))
+                                {
+                                    angleList2Count.Add(angleList2[(int)index]);
+                                }
+                            }
+                            else
+                            {
+                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
+
+                                if (!angleList2Count.Any(x => x == 0))
+                                {
+                                    angleList2Count.Add(0);
+                                }
+                            }
+
+                            lbl_Section2.Text = $"{angleList2Count.Count} / {section2}";
+                            pictureBox2.Image = bmp;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
+        {
+            clickDown1 = false;
+        }
+
     }
 }

@@ -13,8 +13,11 @@ namespace 分數圓餅圖
 {
     public partial class Form1 : Form
     {
-        float radius = 100;
+        float radius = 200;
         int section = 3;
+        int section1 = 3;
+        int section2 = 3;
+
         Point center;
         Graphics g;
         Bitmap bmp;
@@ -28,6 +31,7 @@ namespace 分數圓餅圖
 
         private void Form1_Shown(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Maximized;
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             g = Graphics.FromImage(bmp);
 
@@ -44,30 +48,48 @@ namespace 分數圓餅圖
             float p0X, p0Y, p1X, p1Y;
             double radian;
 
-            g.Clear(Color.White); // 畫布清空
-            angleList.Clear(); // 角度清空
-
-            // 畫一個圓
-            g.DrawEllipse(penBlack, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
-
-            // 畫線
-            for (int i = 0; i < section; i++)
-            {
-                angleList.Add(360f * i / section);
-                radian = DegreeToRad(angleList[i]); // 角度轉弧度
-                p0X = center.X; // 中心點
-                p0Y = center.Y; // 中心點
-                p1X = center.X + ((float)Math.Cos(radian) * radius); // Cosine 算臨邊 也就是 X 座標
-                p1Y = center.Y + ((float)Math.Sin(radian) * radius); // Sine 算臨邊 也就是 Y 座標
-                g.DrawLine(penBlack, p0X, p0Y, p1X, p1Y); // 畫線
-            }
-
             if (rb_Draw_1.Checked)
             {
+                g.Clear(Color.White); // 畫布清空
+                angleList.Clear(); // 角度清空
+
+                // 畫一個圓
+                g.DrawEllipse(penBlack, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+
+                // 畫線
+                for (int i = 0; i < section1; i++)
+                {
+                    angleList.Add(360f * i / section1);
+                    radian = DegreeToRad(angleList[i]); // 角度轉弧度
+                    p0X = center.X; // 中心點
+                    p0Y = center.Y; // 中心點
+                    p1X = center.X + ((float)Math.Cos(radian) * radius); // Cosine 算臨邊 也就是 X 座標
+                    p1Y = center.Y + ((float)Math.Sin(radian) * radius); // Sine 算臨邊 也就是 Y 座標
+                    g.DrawLine(penBlack, p0X, p0Y, p1X, p1Y); // 畫線
+                }
+
                 pictureBox1.Image = bmp;
             }
             else if (rb_Draw_2.Checked)
             {
+                g.Clear(Color.White); // 畫布清空
+                angleList.Clear(); // 角度清空
+
+                // 畫一個圓
+                g.DrawEllipse(penBlack, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+
+                // 畫線
+                for (int i = 0; i < section2; i++)
+                {
+                    angleList.Add(360f * i / section2);
+                    radian = DegreeToRad(angleList[i]); // 角度轉弧度
+                    p0X = center.X; // 中心點
+                    p0Y = center.Y; // 中心點
+                    p1X = center.X + ((float)Math.Cos(radian) * radius); // Cosine 算臨邊 也就是 X 座標
+                    p1Y = center.Y + ((float)Math.Sin(radian) * radius); // Sine 算臨邊 也就是 Y 座標
+                    g.DrawLine(penBlack, p0X, p0Y, p1X, p1Y); // 畫線
+                }
+
                 pictureBox2.Image = bmp;
             }
         }
@@ -99,18 +121,33 @@ namespace 分數圓餅圖
 
         private void num_Section_ValueChanged(object sender, EventArgs e)
         {
-            section = (int)num_Section.Value;
+            if (rb_Draw_1.Checked)
+            {
+                section1 = (int)num_Section.Value;
+            }
+            else if (rb_Draw_2.Checked)
+            {
+                section2 = (int)num_Section.Value;
+            }
 
             DrawCircle();
         }
 
         private void rb_Draw_1_CheckedChanged(object sender, EventArgs e)
         {
+            if (rb_Draw_1.Checked)
+            {
+                num_Section.Value = section1;
+            }
             DrawCircle();
         }
 
         private void rb_Draw_2_CheckedChanged(object sender, EventArgs e)
         {
+            if (rb_Draw_2.Checked)
+            {
+                num_Section.Value = section2;
+            }
             DrawCircle();
         }
 
@@ -158,7 +195,7 @@ namespace 分數圓餅圖
                     // 前面畫圓的時候，順便紀錄每條線的角度
                     // 在這邊找到第一個大於點擊的角度，點擊的位置就在這條線和上一條線中間
                     // 沒找到的話，代表是在最後一塊
-                    float index = angleList.FindIndex(x => x > angle); 
+                    float index = angleList.FindIndex(x => x > angle);
                     Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
                     float p0X, p0Y, p1X, p1Y;
 

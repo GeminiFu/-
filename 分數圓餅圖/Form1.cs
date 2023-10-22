@@ -65,6 +65,10 @@ namespace 分數圓餅圖
                 // 畫線
                 for (int i = 0; i < section1; i++)
                 {
+                    if(section1 == 1)
+                    {
+                        break;
+                    }
                     angleList1.Add(360f * i / section1);
                     radian = DegreeToRad(angleList1[i]); // 角度轉弧度
                     p0X = center.X; // 中心點
@@ -87,6 +91,11 @@ namespace 分數圓餅圖
                 // 畫線
                 for (int i = 0; i < section2; i++)
                 {
+                    if (section2 == 1)
+                    {
+                        break;
+                    }
+
                     angleList2.Add(360f * i / section2);
                     radian = DegreeToRad(angleList2[i]); // 角度轉弧度
                     p0X = center.X; // 中心點
@@ -420,6 +429,11 @@ namespace 分數圓餅圖
             {
                 if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
                 {
+                    if(section1 == 0)
+                    {
+                        return;
+                    }
+
                     clickDown1 = true;
 
                     if (rb_Draw_1.Checked)
@@ -469,7 +483,15 @@ namespace 分數圓餅圖
                         }
                         else
                         {
+                            if(section1 == 1)
+                            {
+                                g.FillEllipse(brush, p0X, p0Y, 2 * radius, 2 * radius);
+
+                            }
+                            else
+                            {
                             g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList1[angleList1.Count - 1], -360 / section1);
+                            }
 
                             if (!angleList1Count.Any(x => x == 0))
                             {
@@ -492,6 +514,10 @@ namespace 分數圓餅圖
                 {
                     if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
                     {
+                        if(section1 == 0)
+                        {
+                            return;
+                        }
 
                         if (rb_Draw_1.Checked)
                         {                        // 在圓裡面
@@ -529,7 +555,14 @@ namespace 分數圓餅圖
                             }
                             else
                             {
+                                if(section1 == 1)
+                                {
+                                g.FillEllipse(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+                                }
+                                else
+                                {
                                 g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList1[angleList1.Count - 1], -360 / section1);
+                                }
                                 if (!angleList1Count.Any(x => x == 0))
                                 {
                                     angleList1Count.Add(0);
@@ -556,6 +589,11 @@ namespace 分數圓餅圖
             {
                 if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
                 {
+                    if(section2 == 0)
+                    {
+                        return;
+                    }
+
                     clickDown1 = true;
 
                     if (rb_Draw_2.Checked)
@@ -605,6 +643,10 @@ namespace 分數圓餅圖
                         }
                         else
                         {
+                            if(section2 == 1)
+                            {
+                            g.FillEllipse(brush, p0X, p0Y, 2 * radius, 2 * radius);
+                            }else
                             g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
 
                             if (!angleList2Count.Any(x => x == 0))
@@ -622,6 +664,10 @@ namespace 分數圓餅圖
 
         private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
         {
+            if(section2 == 0)
+            {
+                return;
+            }
             if (clickDown1)
             {
                 if (e.X > (center.X - radius) && e.X < (center.X + radius)) // 判斷 X 軸是否在圓裡面
@@ -665,7 +711,12 @@ namespace 分數圓餅圖
                             }
                             else
                             {
-                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
+                                if (section2 == 1)
+                                {
+                                    g.FillEllipse(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+                                }
+                                else
+                                    g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
 
                                 if (!angleList2Count.Any(x => x == 0))
                                 {

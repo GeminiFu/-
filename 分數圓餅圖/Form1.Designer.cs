@@ -36,7 +36,9 @@
             this.rb_Draw_2 = new System.Windows.Forms.RadioButton();
             this.rb_Draw_1 = new System.Windows.Forms.RadioButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lbl_Section1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lbl_Section2 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.num_Radius)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Section)).BeginInit();
@@ -147,14 +149,26 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.lbl_Section1);
             this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.lbl_Section2);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox2);
             this.splitContainer1.Size = new System.Drawing.Size(869, 420);
             this.splitContainer1.SplitterDistance = 421;
             this.splitContainer1.TabIndex = 6;
+            // 
+            // lbl_Section1
+            // 
+            this.lbl_Section1.AutoSize = true;
+            this.lbl_Section1.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Section1.Location = new System.Drawing.Point(3, 9);
+            this.lbl_Section1.Name = "lbl_Section1";
+            this.lbl_Section1.Size = new System.Drawing.Size(86, 32);
+            this.lbl_Section1.TabIndex = 7;
+            this.lbl_Section1.Text = "label1";
             // 
             // pictureBox1
             // 
@@ -169,6 +183,16 @@
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+            // 
+            // lbl_Section2
+            // 
+            this.lbl_Section2.AutoSize = true;
+            this.lbl_Section2.Font = new System.Drawing.Font("新細明體", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Section2.Location = new System.Drawing.Point(3, 9);
+            this.lbl_Section2.Name = "lbl_Section2";
+            this.lbl_Section2.Size = new System.Drawing.Size(86, 32);
+            this.lbl_Section2.TabIndex = 7;
+            this.lbl_Section2.Text = "label1";
             // 
             // pictureBox2
             // 
@@ -202,7 +226,9 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -223,6 +249,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.RadioButton rb_Draw_2;
+        private System.Windows.Forms.Label lbl_Section1;
+        private System.Windows.Forms.Label lbl_Section2;
     }
 }
 

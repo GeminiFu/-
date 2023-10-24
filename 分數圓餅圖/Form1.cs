@@ -25,6 +25,7 @@ namespace 分數圓餅圖
         List<float> angleList2 = new List<float>();
         List<float> angleList2Count = new List<float>();
         bool clickDown1 = false;
+        Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
 
         public Form1()
         {
@@ -65,7 +66,7 @@ namespace 分數圓餅圖
                 // 畫線
                 for (int i = 0; i < section1; i++)
                 {
-                    if(section1 == 1)
+                    if (section1 == 1)
                     {
                         break;
                     }
@@ -218,7 +219,6 @@ namespace 分數圓餅圖
                         // 在這邊找到第一個大於點擊的角度，點擊的位置就在這條線和上一條線中間
                         // 沒找到的話，代表是在最後一塊
                         float index = angleList1.FindIndex(x => x > angle);
-                        Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
                         float p0X, p0Y, p1X, p1Y;
 
                         p0X = center.X - radius; // 圓心
@@ -229,7 +229,7 @@ namespace 分數圓餅圖
                             // 填滿圓，畫角度是順時鐘，所以加個負號變成逆時鐘
                             g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList1[(int)index - 1], -360 / section1);
 
-                            if(!angleList1Count.Any(x => x == angleList1[(int)index]))
+                            if (!angleList1Count.Any(x => x == angleList1[(int)index]))
                             {
                                 angleList1Count.Add(angleList1[(int)index]);
                             }
@@ -276,7 +276,6 @@ namespace 分數圓餅圖
                         // 在這邊找到第一個大於點擊的角度，點擊的位置就在這條線和上一條線中間
                         // 沒找到的話，代表是在最後一塊
                         float index = angleList2.FindIndex(x => x > angle);
-                        Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
                         float p0X, p0Y, p1X, p1Y;
 
                         p0X = center.X - radius; // 圓心
@@ -295,7 +294,7 @@ namespace 分數圓餅圖
                         else
                         {
                             g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
-                            
+
                             if (!angleList2Count.Any(x => x == 0))
                             {
                                 angleList2Count.Add(0);
@@ -342,7 +341,6 @@ namespace 分數圓餅圖
                             Console.WriteLine($"Click angle is {angle}");
 
                             float index = angleList1.FindIndex(x => x > angle);
-                            Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
 
                             if (index > 0)
                             {
@@ -388,12 +386,11 @@ namespace 分數圓餅圖
                             Console.WriteLine($"Click angle is {angle}");
 
                             float index = angleList2.FindIndex(x => x > angle);
-                            Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
 
                             if (index > 0)
                             {
                                 g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[(int)index - 1], -360 / section2);
-                                
+
                                 if (!angleList2Count.Any(x => x == angleList2[(int)index]))
                                 {
                                     angleList2Count.Add(angleList2[(int)index]);
@@ -402,7 +399,7 @@ namespace 分數圓餅圖
                             else
                             {
                                 g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
-                                
+
                                 if (!angleList2Count.Any(x => x == 0))
                                 {
                                     angleList2Count.Add(0);
@@ -429,7 +426,7 @@ namespace 分數圓餅圖
             {
                 if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
                 {
-                    if(section1 == 0)
+                    if (section1 == 0)
                     {
                         return;
                     }
@@ -465,7 +462,6 @@ namespace 分數圓餅圖
                         // 在這邊找到第一個大於點擊的角度，點擊的位置就在這條線和上一條線中間
                         // 沒找到的話，代表是在最後一塊
                         float index = angleList1.FindIndex(x => x > angle);
-                        Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
                         float p0X, p0Y, p1X, p1Y;
 
                         p0X = center.X - radius; // 圓心
@@ -474,7 +470,7 @@ namespace 分數圓餅圖
                         if (index > 0)
                         {
                             // 填滿圓，畫角度是順時鐘，所以加個負號變成逆時鐘
-                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList1[(int)index - 1], -360 / section1);
+                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList1[(int)index - 1], -360f / section1);
 
                             if (!angleList1Count.Any(x => x == angleList1[(int)index]))
                             {
@@ -483,14 +479,14 @@ namespace 分數圓餅圖
                         }
                         else
                         {
-                            if(section1 == 1)
+                            if (section1 == 1)
                             {
                                 g.FillEllipse(brush, p0X, p0Y, 2 * radius, 2 * radius);
 
                             }
                             else
                             {
-                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList1[angleList1.Count - 1], -360 / section1);
+                                g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList1[angleList1.Count - 1], -360f / section1);
                             }
 
                             if (!angleList1Count.Any(x => x == 0))
@@ -498,6 +494,29 @@ namespace 分數圓餅圖
                                 angleList1Count.Add(0);
                             }
                         }
+
+                        Pen penBlack = new Pen(Color.Black);
+                        double radian;
+
+                        // 畫一個圓
+                        g.DrawEllipse(penBlack, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+
+                        // 畫線
+                        for (int i = 0; i < section1; i++)
+                        {
+                            if (section1 == 1)
+                            {
+                                break;
+                            }
+                            angleList1.Add(360f * i / section1);
+                            radian = DegreeToRad(angleList1[i]); // 角度轉弧度
+                            p0X = center.X; // 中心點
+                            p0Y = center.Y; // 中心點
+                            p1X = center.X + ((float)Math.Cos(radian) * radius); // Cosine 算臨邊 也就是 X 座標
+                            p1Y = center.Y + ((float)Math.Sin(radian) * radius); // Sine 算臨邊 也就是 Y 座標
+                            g.DrawLine(penBlack, p0X, p0Y, p1X, p1Y); // 畫線
+                        }
+
 
                         lbl_Section1.Text = $"{angleList1Count.Count} / {section1}";
                         pictureBox1.Image = bmp; // 畫上圖案
@@ -514,7 +533,7 @@ namespace 分數圓餅圖
                 {
                     if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
                     {
-                        if(section1 == 0)
+                        if (section1 == 0)
                         {
                             return;
                         }
@@ -543,11 +562,10 @@ namespace 分數圓餅圖
                             Console.WriteLine($"Click angle is {angle}");
 
                             float index = angleList1.FindIndex(x => x > angle);
-                            Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
 
                             if (index > 0)
                             {
-                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList1[(int)index - 1], -360 / section1);
+                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList1[(int)index - 1], -360f / section1);
                                 if (!angleList1Count.Any(x => x == angleList1[(int)index]))
                                 {
                                     angleList1Count.Add(angleList1[(int)index]);
@@ -555,19 +573,43 @@ namespace 分數圓餅圖
                             }
                             else
                             {
-                                if(section1 == 1)
+                                if (section1 == 1)
                                 {
-                                g.FillEllipse(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+                                    g.FillEllipse(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
                                 }
                                 else
                                 {
-                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList1[angleList1.Count - 1], -360 / section1);
+                                    g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList1[angleList1.Count - 1], -360f / section1);
                                 }
                                 if (!angleList1Count.Any(x => x == 0))
                                 {
                                     angleList1Count.Add(0);
                                 }
                             }
+
+                            Pen penBlack = new Pen(Color.Black);
+                            double radian;
+                            float p0X, p0Y, p1X, p1Y;
+
+                            // 畫一個圓
+                            g.DrawEllipse(penBlack, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+
+                            // 畫線
+                            for (int i = 0; i < section1; i++)
+                            {
+                                if (section1 == 1)
+                                {
+                                    break;
+                                }
+                                angleList1.Add(360f * i / section1);
+                                radian = DegreeToRad(angleList1[i]); // 角度轉弧度
+                                p0X = center.X; // 中心點
+                                p0Y = center.Y; // 中心點
+                                p1X = center.X + ((float)Math.Cos(radian) * radius); // Cosine 算臨邊 也就是 X 座標
+                                p1Y = center.Y + ((float)Math.Sin(radian) * radius); // Sine 算臨邊 也就是 Y 座標
+                                g.DrawLine(penBlack, p0X, p0Y, p1X, p1Y); // 畫線
+                            }
+
 
                             lbl_Section1.Text = $"{angleList1Count.Count} / {section1}";
                             pictureBox1.Image = bmp;
@@ -589,11 +631,11 @@ namespace 分數圓餅圖
             {
                 if (e.Y > (center.Y - radius) && e.Y < (center.Y + radius)) // 判斷 Y 軸是否在圓裡面
                 {
-                    if(section2 == 0)
+                    if (section2 == 0)
                     {
                         return;
                     }
-
+                    
                     clickDown1 = true;
 
                     if (rb_Draw_2.Checked)
@@ -625,7 +667,6 @@ namespace 分數圓餅圖
                         // 在這邊找到第一個大於點擊的角度，點擊的位置就在這條線和上一條線中間
                         // 沒找到的話，代表是在最後一塊
                         float index = angleList2.FindIndex(x => x > angle);
-                        Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
                         float p0X, p0Y, p1X, p1Y;
 
                         p0X = center.X - radius; // 圓心
@@ -634,7 +675,7 @@ namespace 分數圓餅圖
                         if (index > 0)
                         {
                             // 填滿圓，畫角度是順時鐘，所以加個負號變成逆時鐘
-                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList2[(int)index - 1], -360 / section2);
+                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList2[(int)index - 1], -360f / section2);
 
                             if (!angleList2Count.Any(x => x == angleList2[(int)index]))
                             {
@@ -643,16 +684,38 @@ namespace 分數圓餅圖
                         }
                         else
                         {
-                            if(section2 == 1)
+                            if (section2 == 1)
                             {
-                            g.FillEllipse(brush, p0X, p0Y, 2 * radius, 2 * radius);
-                            }else
-                            g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
+                                g.FillEllipse(brush, p0X, p0Y, 2 * radius, 2 * radius);
+                            }
+                            else
+                                g.FillPie(brush, p0X, p0Y, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360f / section2);
 
                             if (!angleList2Count.Any(x => x == 0))
                             {
                                 angleList2Count.Add(0);
                             }
+                        }
+                        Pen penBlack = new Pen(Color.Black);
+                        double radian;
+
+                        // 畫一個圓
+                        g.DrawEllipse(penBlack, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+
+                        // 畫線
+                        for (int i = 0; i < section2; i++)
+                        {
+                            if (section2 == 1)
+                            {
+                                break;
+                            }
+                            angleList2.Add(360f * i / section2);
+                            radian = DegreeToRad(angleList2[i]); // 角度轉弧度
+                            p0X = center.X; // 中心點
+                            p0Y = center.Y; // 中心點
+                            p1X = center.X + ((float)Math.Cos(radian) * radius); // Cosine 算臨邊 也就是 X 座標
+                            p1Y = center.Y + ((float)Math.Sin(radian) * radius); // Sine 算臨邊 也就是 Y 座標
+                            g.DrawLine(penBlack, p0X, p0Y, p1X, p1Y); // 畫線
                         }
 
                         lbl_Section2.Text = $"{angleList2Count.Count} / {section2}";
@@ -664,7 +727,7 @@ namespace 分數圓餅圖
 
         private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
         {
-            if(section2 == 0)
+            if (section2 == 0)
             {
                 return;
             }
@@ -698,11 +761,10 @@ namespace 分數圓餅圖
                             Console.WriteLine($"Click angle is {angle}");
 
                             float index = angleList2.FindIndex(x => x > angle);
-                            Brush brush = new SolidBrush(Color.FromArgb(255, 0, 0));
 
                             if (index > 0)
                             {
-                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[(int)index - 1], -360 / section2);
+                                g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[(int)index - 1], -360f / section2);
 
                                 if (!angleList2Count.Any(x => x == angleList2[(int)index]))
                                 {
@@ -716,12 +778,34 @@ namespace 分數圓餅圖
                                     g.FillEllipse(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
                                 }
                                 else
-                                    g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360 / section2);
+                                    g.FillPie(brush, center.X - radius, center.Y - radius, 2 * radius, 2 * radius, -angleList2[angleList2.Count - 1], -360f / section2);
 
                                 if (!angleList2Count.Any(x => x == 0))
                                 {
                                     angleList2Count.Add(0);
                                 }
+                            }
+                            Pen penBlack = new Pen(Color.Black);
+                            double radian;
+                            float p0X, p0Y, p1X, p1Y;
+
+                            // 畫一個圓
+                            g.DrawEllipse(penBlack, center.X - radius, center.Y - radius, 2 * radius, 2 * radius);
+
+                            // 畫線
+                            for (int i = 0; i < section2; i++)
+                            {
+                                if (section2 == 1)
+                                {
+                                    break;
+                                }
+                                angleList2.Add(360f * i / section2);
+                                radian = DegreeToRad(angleList2[i]); // 角度轉弧度
+                                p0X = center.X; // 中心點
+                                p0Y = center.Y; // 中心點
+                                p1X = center.X + ((float)Math.Cos(radian) * radius); // Cosine 算臨邊 也就是 X 座標
+                                p1Y = center.Y + ((float)Math.Sin(radian) * radius); // Sine 算臨邊 也就是 Y 座標
+                                g.DrawLine(penBlack, p0X, p0Y, p1X, p1Y); // 畫線
                             }
 
                             lbl_Section2.Text = $"{angleList2Count.Count} / {section2}";
@@ -737,5 +821,14 @@ namespace 分數圓餅圖
             clickDown1 = false;
         }
 
+        private void btn_Pick_Color_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+
+            if(colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                brush = new SolidBrush(colorDialog.Color);
+            }
+        }
     }
 }

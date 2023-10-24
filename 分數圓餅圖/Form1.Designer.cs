@@ -41,6 +41,7 @@
             this.lbl_Section2 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btn_Pick_Color = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.num_Radius)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Section)).BeginInit();
             this.panel1.SuspendLayout();
@@ -224,11 +225,23 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "分數圓餅圖產生器";
             // 
+            // btn_Pick_Color
+            // 
+            this.btn_Pick_Color.Font = new System.Drawing.Font("新細明體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_Pick_Color.Location = new System.Drawing.Point(383, 64);
+            this.btn_Pick_Color.Name = "btn_Pick_Color";
+            this.btn_Pick_Color.Size = new System.Drawing.Size(117, 31);
+            this.btn_Pick_Color.TabIndex = 8;
+            this.btn_Pick_Color.Text = "選顏色";
+            this.btn_Pick_Color.UseVisualStyleBackColor = true;
+            this.btn_Pick_Color.Click += new System.EventHandler(this.btn_Pick_Color_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 588);
+            this.Controls.Add(this.btn_Pick_Color);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
@@ -270,6 +283,7 @@
         private System.Windows.Forms.Label lbl_Section1;
         private System.Windows.Forms.Label lbl_Section2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn_Pick_Color;
     }
 }
 
